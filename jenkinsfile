@@ -1,0 +1,19 @@
+    
+node {
+    stage('source checkout'){
+        git 'https://github.com/RukmaniBhagat/devopsdemo'
+    }
+    stage('mvn compile'){
+        sh label: '', script: 'mvn install'
+    }
+        stage('copy file'){
+        sh label: '', script: 'cp index.html /var/www/html/index-ruk-pipeline.html'
+    }
+    stage('copy xml reports'){
+        junit 'target/surefire-reports/*.xml'
+    }
+       stage('Archive artifacts'){
+       archiveArtifacts 'target/*.jar'
+   }
+    
+}
